@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=GB2312" >
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+        $(function(){
+            var socket = io.connect("http://localhost:3000");
+            var flag = 1;
+        
+            //socket.on('connect', function (data) {
+            //    console.log(data);  
+            //});
+             $("#send").click(function(e){
+              
+                var from = $('#user_name').val(),
+                    msg  = $('#message').val(),
+                    to   = $('#to').val(),
+                 $message_list = $('#message_list');
+                 
+                 fromA = from;
+                 toA = to;
+                 
+                 //新增用户
+                 if(flag == 1) {
+                  //alert(fromA + " - " + toA );
+                  socket.emit('new user',from);
+                 }
+                 
+                
+                //发送消息
+                 socket.emit('private message',from,to,msg);
+                 
+                 //接收消息
+                 socket.on('to'+from, function (data) {
+                  //alert("from " + from +" ,data " + data);
+                  //alert('to'+from);
+                    $message_list.append('<li>'+to+'说'+data.mess+'</li><li>');
+                 });
+                 
+                 flag += 1;
+                 
+             });
+        });
+    </script>
+ 
+ </head>
+ <body>
+    姓名:<input id="user_name" type="text"><br>
+    发送给：<input type="text" id="to"><br>
+    消息内容:<input type="text" id="message"><button type="button" id="send">发送</button>
+    <ul id="message_list"></ul>
+  <li></li>
+ </body>
+ 
+</html>

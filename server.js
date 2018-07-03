@@ -86,7 +86,7 @@ server.createServer(function (request, response) {
 		});
 	};
 	pathHandle(realPath);
-}).listen(9099);
+}).listen(3000);
 
 //控制台中输出信息
-console.log("Server is listening port 9099...");
+console.log("Server is listening port 3000...");

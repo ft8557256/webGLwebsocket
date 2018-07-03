@@ -1,4 +1,4 @@
-var io = require('socket.io').listen(8088);
+var io = require('socket.io').listen(3000);
 // 所有在线的用户
 var userList = {};
 // 所有在聊天室的人
